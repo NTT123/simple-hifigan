@@ -149,15 +149,15 @@ for i, batch in tqdm(enumerate(train_dataloader)):
     g_scaler.scale(loss_gen_all).backward()
     g_scaler.step(optim_g)
     g_scaler.update()
-    train_writer.add_scalar("loss_disc_f", loss_disc_f, global_step=i)
-    train_writer.add_scalar("loss_disc_s", loss_disc_s, global_step=i)
-    train_writer.add_scalar("loss_disc_all", loss_disc_all, global_step=i)
-    train_writer.add_scalar("gen_loss_total", loss_gen_all, global_step=i)
-    train_writer.add_scalar("loss_mel", loss_mel, global_step=i)
+    train_writer.add_scalar("loss_disc_f", loss_disc_f.float(), global_step=i)
+    train_writer.add_scalar("loss_disc_s", loss_disc_s.float(), global_step=i)
+    train_writer.add_scalar("loss_disc_all", loss_disc_all.float(), global_step=i)
+    train_writer.add_scalar("gen_loss_total", loss_gen_all.float(), global_step=i)
+    train_writer.add_scalar("loss_mel", loss_mel.float(), global_step=i)
     train_writer.add_scalar("loss_fm_f", loss_fm_f.float(), global_step=i)
     train_writer.add_scalar("loss_fm_s", loss_fm_s.float(), global_step=i)
-    train_writer.add_scalar("loss_gen_f", loss_gen_f, global_step=i)
-    train_writer.add_scalar("loss_gen_s", loss_gen_s, global_step=i)
+    train_writer.add_scalar("loss_gen_f", loss_gen_f.float(), global_step=i)
+    train_writer.add_scalar("loss_gen_s", loss_gen_s.float(), global_step=i)
     train_writer.add_scalar("d_grad_scale", d_scaler.get_scale(), global_step=i)
     train_writer.add_scalar("g_grad_scale", g_scaler.get_scale(), global_step=i)
 
@@ -176,7 +176,7 @@ for i, batch in tqdm(enumerate(train_dataloader)):
             y_g_hat_mel = mel_spectrogram_loss(y_g_hat.squeeze(1))
             # L1 Mel-Spectrogram Loss
             loss_mel = F.l1_loss(y_mel, y_g_hat_mel)
-            val_writer.add_scalar("loss_mel", loss_mel, global_step=i)
+            val_writer.add_scalar("loss_mel", loss_mel.float(), global_step=i)
             generator.train()
 
     if i % ckpt_interval == 0:
