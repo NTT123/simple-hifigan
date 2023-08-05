@@ -37,7 +37,6 @@ def get_util_funcs(config_file, device):
     with open(config_file, "r", encoding="utf-8") as f:
         config = json.load(f)
     segment_size = config["segment_size"]
-    num_parts = 100
     sampling_rate = config["sampling_rate"]
     n_fft = config["n_fft"]
     num_mels = config["num_mels"]
@@ -113,7 +112,7 @@ def get_util_funcs(config_file, device):
         )
         return x[start_idx : start_idx + segment_size]
 
-    def get_data_iter(data_dir, batch_size):
+    def get_data_iter(data_dir, batch_size, num_parts):
         files = tf.data.Dataset.list_files(f"{data_dir}/part_*.tfrecord")
         files = files.repeat().shuffle(num_parts)
         ds = (
