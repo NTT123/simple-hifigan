@@ -42,7 +42,7 @@ log_dir = FLAGS.log_dir
 tfdata_dir = FLAGS.tfdata_dir
 ckpt_dir = FLAGS.ckpt_dir
 ckpt_interval = FLAGS.ckpt_interval
-
+ckpt_dir.mkdir(exist_ok=True, parents=True)
 # credit: https://github.com/karpathy/nanoGPT/blob/master/train.py#L72-L112
 torch.backends.cudnn.benchmark = True
 torch.cuda.manual_seed(FLAGS.seed)
