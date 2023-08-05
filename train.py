@@ -166,11 +166,8 @@ for i, batch in tqdm(enumerate(train_dataloader)):
         with torch.no_grad():
             generator.eval()
             batch = next(val_data_iter)
-            y = batch["wav"]
             x = batch["mel"]
             y_mel = batch["mel_loss"]
-            y = y.unsqueeze(1)
-
             with ctx:
                 y_g_hat = generator(x)
             y_g_hat_mel = mel_spectrogram_loss(y_g_hat.squeeze(1))
