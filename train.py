@@ -101,8 +101,8 @@ val_writer = SummaryWriter(log_dir / "val", flush_secs=30)
 mel_spectrogram, mel_spectrogram_loss, get_data_iter = get_util_funcs(
     config_file, device
 )
-train_dataloader = get_data_iter(tfdata_dir / "train", h.batch_size, 100)
-val_dataloader = get_data_iter(tfdata_dir / "val", h.batch_size, 1)
+train_dataloader = get_data_iter(tfdata_dir / "train", h.batch_size)
+val_dataloader = get_data_iter(tfdata_dir / "val", h.batch_size)
 val_data_iter = iter(val_dataloader)
 
 for i, batch in tqdm(enumerate(train_dataloader)):

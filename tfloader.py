@@ -112,9 +112,9 @@ def get_util_funcs(config_file, device):
         )
         return x[start_idx : start_idx + segment_size]
 
-    def get_data_iter(data_dir, batch_size, num_parts):
+    def get_data_iter(data_dir, batch_size):
         files = tf.data.Dataset.list_files(f"{data_dir}/part_*.tfrecord")
-        files = files.repeat().shuffle(num_parts)
+        files = files.repeat().shuffle(len(files))
         ds = (
             tf.data.TFRecordDataset(files, num_parallel_reads=4)
             .map(sample_slice, num_parallel_calls=4)
